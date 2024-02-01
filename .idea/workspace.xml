@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="Nullチェック">
+    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="いい感じに成った">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/STYLE/Main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/STYLE/Main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/STYLE/UI.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/STYLE/UI.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +206,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706798392762</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="いい感じに成った">
+      <option name="closed" value="true" />
+      <created>1706799832479</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1706799832479</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -219,6 +226,7 @@
     <MESSAGE value="タイムライン取得API" />
     <MESSAGE value="タイムラインを取得し追加" />
     <MESSAGE value="Nullチェック" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nullチェック" />
+    <MESSAGE value="いい感じに成った" />
+    <option name="LAST_COMMIT_MESSAGE" value="いい感じに成った" />
   </component>
 </project>

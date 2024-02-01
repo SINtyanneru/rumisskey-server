@@ -6,6 +6,14 @@ let MAIN_EL = document.getElementById("MAIN");
 
 let TOKEN = "4LfqJNO9w8x1x6rD";
 
+let THIS_INSTANCE = {
+	NAME:"る、みすきー",
+	ICON:"https://rumiserver.com/Asset/MISSKEY/FAVICON.png",
+	DOMAIN:"ussr.rumiserver.com",
+	SOFTWARE_NAME:"rumisskey",
+	THEME_COLOR:"#00FFB6"
+};
+
 window.addEventListener("load", async (E)=>{
 	const RESULT = await GET_TIMELINE(CREATE_NOTE_TEXT_EL.value);
 
@@ -30,10 +38,12 @@ window.addEventListener("load", async (E)=>{
 						return {
 							NAME:TIMELINE_DATA.INSTANCE.NAME,
 							DOMAIN:TIMELINE_DATA.INSTANCE.DOMAIN,
-							SOFTWARE_NAME:TIMELINE_DATA.INSTANCE.SOFTWARE_NAME
+							SOFTWARE_NAME:TIMELINE_DATA.INSTANCE.SOFTWARE_NAME,
+							THEME_COLOR:TIMELINE_DATA.INSTANCE.THEME_COLOR,
+							ICON:TIMELINE_DATA.INSTANCE.ICON
 						};
 					}else{
-						return null;
+						return THIS_INSTANCE;
 					}
 				})()
 			);
@@ -81,7 +91,11 @@ function ADD_NOTE_ELEMENT(EL, NOTE, AUTHOR, INSTANCE){
 
 	let USER_EL = document.createElement("DIV");
 	USER_EL.className = "USER";
-	USER_EL.innerHTML = `<IMG SRC="${AUTHOR.ICON}"><A HREF="/USER/${AUTHOR.UID}@${AUTHOR.DOMAIN}">${AUTHOR.NAME}</A>`;
+	USER_EL.innerHTML = `
+							<IMG SRC="${AUTHOR.ICON}">
+							<A HREF="/USER/${AUTHOR.UID}@${AUTHOR.DOMAIN}">${AUTHOR.NAME}</A>
+							<SPAN CLASS="INSTANCE" STYLE="background-color: ${INSTANCE.THEME_COLOR};"><IMG SRC="${INSTANCE.ICON}">${INSTANCE.NAME}</SPAN>
+						`;
 	NOTE_EL.appendChild(USER_EL);
 
 	let TEXT_EL = document.createElement("DIV");
