@@ -30,20 +30,15 @@ function CREATE_NOTE_DIALOG_SUBMIT(){
 	}
 }
 
-async function CREATE_NOTE(TEXT){
-	const AJAX = await fetch("/API/CREATE_NOTE", {
-		method:"POST",
-		headers:{
-			TOKEN
-		},
-		body:JSON.stringify({
-			TEXT
-		})
-	});
+function ADD_NOTE_ELEMENT(EL, NOTE_ID, NOTE_TEXT){
+	let NOTE_EL = document.createElement("DIV");
+	NOTE_EL.className = "NOTE";
+	NOTE_EL.id = "NOTE-" + NOTE_ID;
 
-	if(AJAX.ok){
-		return await AJAX.json();
-	}else{
-		return false;
-	}
+	let TEXT_EL = document.createElement("DIV");
+	TEXT_EL.innerHTML = NOTE_TEXT.replaceAll("\n", "<BR>");
+	NOTE_EL.appendChild(TEXT_EL);
+
+	//作ったエレメントを指定のエレメントに追加
+	EL.appendChild(NOTE_EL);
 }
