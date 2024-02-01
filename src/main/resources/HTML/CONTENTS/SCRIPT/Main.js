@@ -12,7 +12,31 @@ window.addEventListener("load", async (E)=>{
 	if(RESULT !== false){
 		for (let I = 0; I < RESULT.TIMELINE.length; I++) {
 			const TIMELINE_DATA = RESULT.TIMELINE[I];
-			ADD_NOTE_ELEMENT(MAIN_EL, TIMELINE_DATA.ID, TIMELINE_DATA.TEXT);
+			ADD_NOTE_ELEMENT(MAIN_EL,
+				{
+					ID:TIMELINE_DATA.ID,
+					TEXT:TIMELINE_DATA.TEXT,
+					DATE:TIMELINE_DATA.DATE
+				},
+				{
+					ID:TIMELINE_DATA.AUTHOR.ID,
+					UID:TIMELINE_DATA.AUTHOR.UID,
+					HOST:TIMELINE_DATA.AUTHOR.HOST,
+					NAME:TIMELINE_DATA.AUTHOR.NAME,
+					ICON:TIMELINE_DATA.AUTHOR.ICON
+				},
+				(function(){
+					if(TIMELINE_DATA.INSTANCE){
+						return {
+							NAME:TIMELINE_DATA.INSTANCE.NAME,
+							DOMAIN:TIMELINE_DATA.INSTANCE.DOMAIN,
+							SOFTWARE_NAME:TIMELINE_DATA.INSTANCE.SOFTWARE_NAME
+						};
+					}else{
+						return null;
+					}
+				})()
+			);
 		}
 	}
 });
@@ -40,21 +64,36 @@ async function CREATE_NOTE_DIALOG_SUBMIT(){
 	if(RESULT !== false){
 		OPEN_CREATE_NOTE_DIALOG();
 
-		ADD_NOTE_ELEMENT(MAIN_EL, RESULT.ID, CREATE_NOTE_TEXT_EL.value);
-
 		//入力欄をリセット
 		CREATE_NOTE_TEXT_EL.value = "";
 	}
 }
 
-function ADD_NOTE_ELEMENT(EL, NOTE_ID, NOTE_TEXT){
+/**
+ * 
+ * @param {Element} EL 追加したい先
+ * @param {Array} NOTE //ノート
+ */
+function ADD_NOTE_ELEMENT(EL, NOTE, AUTHOR, INSTANCE){
 	let NOTE_EL = document.createElement("DIV");
 	NOTE_EL.className = "NOTE";
-	NOTE_EL.id = "NOTE-" + NOTE_ID;
+	NOTE_EL.id = "NOTE-" + NOTE.ID;
+
+	let USER_EL = document.createElement("DIV");
+	USER_EL.className = "USER";
+	USER_EL.innerHTML = `<IMG SRC="${AUTHOR.ICON}"><A HREF="/USER/${AUTHOR.UID}@${AUTHOR.DOMAIN}">${AUTHOR.NAME}</A>`;
+	NOTE_EL.appendChild(USER_EL);
 
 	let TEXT_EL = document.createElement("DIV");
-	TEXT_EL.innerHTML = NOTE_TEXT.replaceAll("\n", "<BR>");
+	TEXT_EL.className = "TEXT";
+	if(NOTE.TEXT){//本文があるなら追記
+		TEXT_EL.innerHTML = NOTE.TEXT.replaceAll("\n", "<BR>");
+	}
 	NOTE_EL.appendChild(TEXT_EL);
+
+	let STATUS_EL = document.createElement("DIV");
+	STATUS_EL.className = "STATUS";
+	NOTE_EL.appendChild(STATUS_EL);
 
 	//作ったエレメントを指定のエレメントに追加
 	EL.appendChild(NOTE_EL);
