@@ -10,8 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 import static com.rumisystem.rumisskey_server.Main.LOG_PRINT;
 
@@ -52,41 +51,128 @@ public class ROUTER {
 				RESULT.put("STATUS_CODE", 200);
 			} else if(REQ_PATH.startsWith("/API")){
 				//API
+				//ヘッダーを設定
+				responseHeaders.set("Content-Type", "application/json; charset=UTF-8");
+
 				switch (REQ_PATH){
 					case "/API/CREATE_NOTE":{
-						//ヘッダーを設定
-						responseHeaders.set("Content-Type", "application/json; charset=UTF-8");
+						if(EXCHANGE.getRequestMethod().equals("POST")){
+							ObjectMapper OBJ_MAPPER = new ObjectMapper();
+							JsonNode REQUEST_POST_JSON = OBJ_MAPPER.readTree(POST_DATA);
 
-						ObjectMapper OBJ_MAPPER = new ObjectMapper();
-						JsonNode REQUEST_POST_JSON = OBJ_MAPPER.readTree(POST_DATA);
+							if(EXCHANGE.getRequestHeaders().get("TOKEN").toString() != null){
+								//POST内容
+								HashMap<String, String> POST_BODY = new HashMap();
+								POST_BODY.put("i", EXCHANGE.getRequestHeaders().get("TOKEN").toString().replace("[", "").replace("]", ""));
+								POST_BODY.put("text", REQUEST_POST_JSON.get("TEXT").textValue());
 
-						if(EXCHANGE.getRequestHeaders().get("TOKEN").toString() != null){
+								//HTTPリクエストを送る
+								String AJAX = new HTTP_REQUEST("https://ussr.rumiserver.com/api/notes/create").SEND(
+										new ObjectMapper().writeValueAsString(POST_BODY)
+								);
+
+								ObjectMapper AJAX_OBJ_MAPPER = new ObjectMapper();
+								JsonNode AJAX_JSON = AJAX_OBJ_MAPPER.readTree(AJAX);
+
+								//返答の内容
+								HashMap<String, Object> RESULT_BODY = new HashMap();
+								RESULT_BODY.put("STATUS", true);
+								RESULT_BODY.put("ID", AJAX_JSON.get("createdNote").get("id").textValue());
+
+								RESULT = new HashMap();
+								RESULT.put("RESPONSE", new ObjectMapper().writeValueAsString(RESULT_BODY));
+								RESULT.put("STATUS_CODE", 200);
+							} else {
+								RESULT = new HashMap();
+								RESULT.put("RESPONSE", "{\"STATUS\":false}");
+								RESULT.put("STATUS_CODE", 200);
+							}
+						} else {//メソッドがPOSTじゃない
+							RESULT = new HashMap();
+							RESULT.put("RESPONSE", "{\"STATUS\":false}");
+							RESULT.put("STATUS_CODE", 500);
+						}
+						break;
+					}
+
+					case "/API/GET_TIMELINE":{
+						if(EXCHANGE.getRequestMethod().equals("GET")){
 							//POST内容
-							HashMap<String, String> POST_BODY = new HashMap();
+							HashMap<String, Object> POST_BODY = new HashMap();
 							POST_BODY.put("i", EXCHANGE.getRequestHeaders().get("TOKEN").toString().replace("[", "").replace("]", ""));
-							POST_BODY.put("text", REQUEST_POST_JSON.get("TEXT").textValue());
+							POST_BODY.put("allowPartial", true);
+							POST_BODY.put("limit", 20);
+							POST_BODY.put("withRenotes", true);
 
 							//HTTPリクエストを送る
-							String AJAX = new HTTP_REQUEST("https://ussr.rumiserver.com/api/notes/create").SEND(
+							String AJAX = new HTTP_REQUEST("https://ussr.rumiserver.com/api/notes/timeline").SEND(
 									new ObjectMapper().writeValueAsString(POST_BODY)
 							);
 
 							ObjectMapper AJAX_OBJ_MAPPER = new ObjectMapper();
 							JsonNode AJAX_JSON = AJAX_OBJ_MAPPER.readTree(AJAX);
 
+							//タイムラインの内容
+							List<HashMap> TIMELINE_CONTENTS = new ArrayList<>();
+
+							for(int I = 0; I < 20; I++){
+								if(!AJAX_JSON.get(I).isNull()){
+									JsonNode ROW = AJAX_JSON.get(I);
+
+									HashMap<String, Object> TIMELINE_CONTENT = new HashMap<>();
+
+									//ノートの情報
+									TIMELINE_CONTENT.put("ID", ROW.get("id").textValue());
+									TIMELINE_CONTENT.put("DATE", ROW.get("createdAt").textValue());
+									TIMELINE_CONTENT.put("TEXT", ROW.get("text").textValue());
+
+									//投稿者の情報
+									HashMap<String, Object> AUTHOR_INFO = new HashMap<>();
+									AUTHOR_INFO.put("ID", ROW.get("user").get("id").textValue());
+									AUTHOR_INFO.put("NAME", ROW.get("user").get("name").textValue());
+									AUTHOR_INFO.put("UID", ROW.get("user").get("username").textValue());
+									AUTHOR_INFO.put("HOST", ROW.get("user").get("host").textValue());
+									AUTHOR_INFO.put("ICON", ROW.get("user").get("avatarUrl").textValue());
+									AUTHOR_INFO.put("BOT", ROW.get("user").get("isBot").asBoolean());
+									AUTHOR_INFO.put("CAT", ROW.get("user").get("isCat").asBoolean());
+									//追加
+									TIMELINE_CONTENT.put("AUTHOR", AUTHOR_INFO);
+
+									if(ROW.get("user").get("instance") != null){
+										//インスタンスの情報
+										HashMap<String, Object> INSTANCE_INFO = new HashMap<>();
+										INSTANCE_INFO.put("NAME", ROW.get("user").get("instance").get("name").textValue());
+										INSTANCE_INFO.put("SOFTWARE_NAME", ROW.get("user").get("instance").get("softwareName").textValue());
+										INSTANCE_INFO.put("SOFTWARE_VERSION", ROW.get("user").get("instance").get("softwareVersion").textValue());
+										INSTANCE_INFO.put("ICON", ROW.get("user").get("instance").get("iconUrl").textValue());
+										INSTANCE_INFO.put("DOMAIN", ROW.get("user").get("host").textValue());
+										INSTANCE_INFO.put("THEME_COLOR", ROW.get("user").get("instance").get("themeColor").textValue());
+										//追加
+										TIMELINE_CONTENT.put("INSTANCE", INSTANCE_INFO);
+									}else {//Nullなので
+										//追加
+										TIMELINE_CONTENT.put("INSTANCE", null);
+									}
+
+									TIMELINE_CONTENTS.add(TIMELINE_CONTENT);
+								} else {
+									break;
+								}
+							}
+
+							//返答の内容
 							HashMap<String, Object> RESULT_BODY = new HashMap();
 							RESULT_BODY.put("STATUS", true);
-							RESULT_BODY.put("ID", AJAX_JSON.get("createdNote").get("id").textValue());
+							RESULT_BODY.put("TIMELINE", TIMELINE_CONTENTS);
 
 							RESULT = new HashMap();
 							RESULT.put("RESPONSE", new ObjectMapper().writeValueAsString(RESULT_BODY));
 							RESULT.put("STATUS_CODE", 200);
-						} else {
+						} else {//メソッドがGETじゃない
 							RESULT = new HashMap();
 							RESULT.put("RESPONSE", "{\"STATUS\":false}");
-							RESULT.put("STATUS_CODE", 200);
+							RESULT.put("STATUS_CODE", 500);
 						}
-						break;
 					}
 				}
 			} else {//その他
@@ -144,7 +230,8 @@ public class ROUTER {
 				OS.close();
 			}
 		}catch (Exception EX){
-			LOG_PRINT("HTTP-ROUTER", 2, EX.getMessage());
+			LOG_PRINT("HTTP-ROUTER", 2, "Err");
+			EX.printStackTrace();
 		}
 	}
 

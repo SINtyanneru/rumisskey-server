@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="ノートを追加するファンクション">
+    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="UXが改善したり">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/rumisystem/rumisskey_server/HTTP/ROUTER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rumisystem/rumisskey_server/HTTP/ROUTER.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/API.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/API.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706793674924</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="UXが改善したり">
+      <option name="closed" value="true" />
+      <created>1706795353269</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1706795353269</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -173,6 +182,7 @@
     <MESSAGE value="ノートする昨日" />
     <MESSAGE value="色々" />
     <MESSAGE value="ノートを追加するファンクション" />
-    <option name="LAST_COMMIT_MESSAGE" value="ノートを追加するファンクション" />
+    <MESSAGE value="UXが改善したり" />
+    <option name="LAST_COMMIT_MESSAGE" value="UXが改善したり" />
   </component>
 </project>

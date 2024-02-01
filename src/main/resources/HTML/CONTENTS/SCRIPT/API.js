@@ -15,3 +15,18 @@ async function CREATE_NOTE(TEXT){
 		return false;
 	}
 }
+
+async function GET_TIMELINE(){
+	const AJAX = await fetch("/API/GET_TIMELINE", {
+		method:"GET",
+		headers:{
+			TOKEN
+		}
+	});
+
+	if(AJAX.ok){
+		return await AJAX.json();
+	}else{
+		return false;
+	}
+}
