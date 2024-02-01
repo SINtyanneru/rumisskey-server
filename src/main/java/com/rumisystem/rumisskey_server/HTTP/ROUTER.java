@@ -58,19 +58,28 @@ public class ROUTER {
 						responseHeaders.set("Content-Type", "application/json; charset=UTF-8");
 
 						ObjectMapper OBJ_MAPPER = new ObjectMapper();
-						JsonNode POST_JSON = OBJ_MAPPER.readTree(POST_DATA);
+						JsonNode REQUEST_POST_JSON = OBJ_MAPPER.readTree(POST_DATA);
 
 						if(EXCHANGE.getRequestHeaders().get("TOKEN").toString() != null){
+							//POST内容
 							HashMap<String, String> POST_BODY = new HashMap();
 							POST_BODY.put("i", EXCHANGE.getRequestHeaders().get("TOKEN").toString().replace("[", "").replace("]", ""));
-							POST_BODY.put("text", POST_JSON.get("TEXT").textValue());
+							POST_BODY.put("text", REQUEST_POST_JSON.get("TEXT").textValue());
 
-							String POST_BODY_JSON = new ObjectMapper().writeValueAsString(POST_BODY);
+							//HTTPリクエストを送る
+							String AJAX = new HTTP_REQUEST("https://ussr.rumiserver.com/api/notes/create").SEND(
+									new ObjectMapper().writeValueAsString(POST_BODY)
+							);
 
-							new HTTP_REQUEST("https://ussr.rumiserver.com/api/notes/create").SEND(POST_BODY_JSON);
+							ObjectMapper AJAX_OBJ_MAPPER = new ObjectMapper();
+							JsonNode AJAX_JSON = AJAX_OBJ_MAPPER.readTree(AJAX);
+
+							HashMap<String, Object> RESULT_BODY = new HashMap();
+							RESULT_BODY.put("STATUS", true);
+							RESULT_BODY.put("ID", AJAX_JSON.get("createdNote").get("id").textValue());
 
 							RESULT = new HashMap();
-							RESULT.put("RESPONSE", "{\"STATUS\":true}");
+							RESULT.put("RESPONSE", new ObjectMapper().writeValueAsString(RESULT_BODY));
 							RESULT.put("STATUS_CODE", 200);
 						} else {
 							RESULT = new HashMap();

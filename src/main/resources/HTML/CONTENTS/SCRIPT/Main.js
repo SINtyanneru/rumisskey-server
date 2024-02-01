@@ -1,6 +1,7 @@
 let DIALOG_BG_EL = document.getElementById("DIALOG_BG");
 let CREATE_NOTE_DIALOG_EL = document.getElementById("CREATE_NOTE_DIALOG");
 let CREATE_NOTE_TEXT_EL = document.getElementById("CREATE_NOTE_TEXT");
+let MAIN_EL = document.getElementById("MAIN");
 
 
 let TOKEN = "4LfqJNO9w8x1x6rD";
@@ -22,11 +23,16 @@ function OPEN_CREATE_NOTE_DIALOG(){
 	}
 }
 
-function CREATE_NOTE_DIALOG_SUBMIT(){
-	const RESULT = CREATE_NOTE(CREATE_NOTE_TEXT_EL.value);
+async function CREATE_NOTE_DIALOG_SUBMIT(){
+	const RESULT = await CREATE_NOTE(CREATE_NOTE_TEXT_EL.value);
 
 	if(RESULT !== false){
 		OPEN_CREATE_NOTE_DIALOG();
+
+		ADD_NOTE_ELEMENT(MAIN_EL, RESULT.ID, CREATE_NOTE_TEXT_EL.value);
+
+		//入力欄をリセット
+		CREATE_NOTE_TEXT_EL.value = "";
 	}
 }
 
