@@ -60,7 +60,7 @@ public class ROUTER {
 							ObjectMapper OBJ_MAPPER = new ObjectMapper();
 							JsonNode REQUEST_POST_JSON = OBJ_MAPPER.readTree(POST_DATA);
 
-							if(EXCHANGE.getRequestHeaders().get("TOKEN").toString() != null){
+							if(EXCHANGE.getRequestHeaders().get("TOKEN") != null && REQUEST_POST_JSON.get("TEXT") != null){
 								//POST内容
 								HashMap<String, String> POST_BODY = new HashMap();
 								POST_BODY.put("i", EXCHANGE.getRequestHeaders().get("TOKEN").toString().replace("[", "").replace("]", ""));
