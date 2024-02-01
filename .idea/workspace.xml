@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="いい感じに成った">
+    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="変えるとこミスったわ（）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/Main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/Main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/STYLE/UI.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/STYLE/UI.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +213,31 @@
       <option name="project" value="LOCAL" />
       <updated>1706799832479</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="改善">
+      <option name="closed" value="true" />
+      <created>1706800654300</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1706800654300</updated>
+    </task>
+    <task id="LOCAL-00013" summary="faviconUrlに変えた">
+      <option name="closed" value="true" />
+      <created>1706800692644</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1706800692644</updated>
+    </task>
+    <task id="LOCAL-00014" summary="変えるとこミスったわ（）">
+      <option name="closed" value="true" />
+      <created>1706800767182</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1706800767182</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -227,6 +250,9 @@
     <MESSAGE value="タイムラインを取得し追加" />
     <MESSAGE value="Nullチェック" />
     <MESSAGE value="いい感じに成った" />
-    <option name="LAST_COMMIT_MESSAGE" value="いい感じに成った" />
+    <MESSAGE value="改善" />
+    <MESSAGE value="faviconUrlに変えた" />
+    <MESSAGE value="変えるとこミスったわ（）" />
+    <option name="LAST_COMMIT_MESSAGE" value="変えるとこミスったわ（）" />
   </component>
 </project>

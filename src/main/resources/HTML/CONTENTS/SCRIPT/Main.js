@@ -94,7 +94,7 @@ function ADD_NOTE_ELEMENT(EL, NOTE, AUTHOR, INSTANCE){
 	USER_EL.innerHTML = `
 							<IMG SRC="${AUTHOR.ICON}">
 							<A HREF="/USER/${AUTHOR.UID}@${AUTHOR.DOMAIN}">${AUTHOR.NAME}</A>
-							<SPAN CLASS="INSTANCE" STYLE="background-color: ${INSTANCE.THEME_COLOR};"><IMG SRC="${INSTANCE.ICON}">${INSTANCE.NAME}</SPAN>
+							<SPAN CLASS="INSTANCE" STYLE="background-color: ${INSTANCE.THEME_COLOR}; color: ${INVERSE_COLOR(INSTANCE.THEME_COLOR)};"><IMG SRC="${INSTANCE.ICON}">${INSTANCE.NAME}</SPAN>
 						`;
 	NOTE_EL.appendChild(USER_EL);
 
@@ -112,3 +112,23 @@ function ADD_NOTE_ELEMENT(EL, NOTE, AUTHOR, INSTANCE){
 	//作ったエレメントを指定のエレメントに追加
 	EL.appendChild(NOTE_EL);
 }
+
+//参考、というかベース:http://yasu0120.blog130.fc2.com/blog-entry-21.html
+function INVERSE_COLOR(BASE_COLOR){
+	BASE_COLOR = BASE_COLOR.replace('#', '');
+	if (BASE_COLOR.length != 6){ return '#000000'; }
+	NEW_COLOR = '';
+	for (X=0;X<3;X++){
+		COLOR_WK = 255 - parseInt(BASE_COLOR.substr(( X * 2) , 2) , 16);
+		if (COLOR_WK < 0) {
+			COLOR_WK = 0;
+		} else {
+			COLOR_WK = COLOR_WK.toString(16);
+		}
+		if (COLOR_WK.length < 2){
+			COLOR_WK = '0' + COLOR_WK ;
+		}
+		NEW_COLOR += COLOR_WK;
+	}
+	return ('#' + NEW_COLOR);
+} 
