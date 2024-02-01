@@ -133,7 +133,7 @@ public class ROUTER {
 										AUTHOR_INFO.put("NAME", ROW.get("user").get("name").textValue());
 										AUTHOR_INFO.put("UID", ROW.get("user").get("username").textValue());
 										AUTHOR_INFO.put("HOST", ROW.get("user").get("host").textValue());
-										AUTHOR_INFO.put("ICON", ROW.get("user").get("avatarUrl").textValue());
+										AUTHOR_INFO.put("ICON", ROW.get("user").get("faviconUrl").textValue());
 										AUTHOR_INFO.put("BOT", ROW.get("user").get("isBot").asBoolean());
 										AUTHOR_INFO.put("CAT", ROW.get("user").get("isCat").asBoolean());
 										//追加
