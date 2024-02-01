@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="UXが改善したり">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="4c88815d-4052-495c-95a0-92050bfa333e" name="変更" comment="Nullチェック">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/rumisystem/rumisskey_server/HTTP/ROUTER.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rumisystem/rumisskey_server/HTTP/ROUTER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/API.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/HTML/CONTENTS/SCRIPT/API.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +172,31 @@
       <option name="project" value="LOCAL" />
       <updated>1706795353269</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="タイムライン取得API">
+      <option name="closed" value="true" />
+      <created>1706798070562</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1706798070562</updated>
+    </task>
+    <task id="LOCAL-00008" summary="タイムラインを取得し追加">
+      <option name="closed" value="true" />
+      <created>1706798259283</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1706798259283</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Nullチェック">
+      <option name="closed" value="true" />
+      <created>1706798267558</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1706798267558</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -183,6 +205,9 @@
     <MESSAGE value="色々" />
     <MESSAGE value="ノートを追加するファンクション" />
     <MESSAGE value="UXが改善したり" />
-    <option name="LAST_COMMIT_MESSAGE" value="UXが改善したり" />
+    <MESSAGE value="タイムライン取得API" />
+    <MESSAGE value="タイムラインを取得し追加" />
+    <MESSAGE value="Nullチェック" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nullチェック" />
   </component>
 </project>

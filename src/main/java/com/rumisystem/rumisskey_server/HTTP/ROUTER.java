@@ -97,77 +97,79 @@ public class ROUTER {
 
 					case "/API/GET_TIMELINE":{
 						if(EXCHANGE.getRequestMethod().equals("GET")){
-							//POST内容
-							HashMap<String, Object> POST_BODY = new HashMap();
-							POST_BODY.put("i", EXCHANGE.getRequestHeaders().get("TOKEN").toString().replace("[", "").replace("]", ""));
-							POST_BODY.put("allowPartial", true);
-							POST_BODY.put("limit", 20);
-							POST_BODY.put("withRenotes", true);
+							if(EXCHANGE.getRequestHeaders().get("TOKEN") != null){
+								//POST内容
+								HashMap<String, Object> POST_BODY = new HashMap();
+								POST_BODY.put("i", EXCHANGE.getRequestHeaders().get("TOKEN").toString().replace("[", "").replace("]", ""));
+								POST_BODY.put("allowPartial", true);
+								POST_BODY.put("limit", 20);
+								POST_BODY.put("withRenotes", true);
 
-							//HTTPリクエストを送る
-							String AJAX = new HTTP_REQUEST("https://ussr.rumiserver.com/api/notes/timeline").SEND(
-									new ObjectMapper().writeValueAsString(POST_BODY)
-							);
+								//HTTPリクエストを送る
+								String AJAX = new HTTP_REQUEST("https://ussr.rumiserver.com/api/notes/timeline").SEND(
+										new ObjectMapper().writeValueAsString(POST_BODY)
+								);
 
-							ObjectMapper AJAX_OBJ_MAPPER = new ObjectMapper();
-							JsonNode AJAX_JSON = AJAX_OBJ_MAPPER.readTree(AJAX);
+								ObjectMapper AJAX_OBJ_MAPPER = new ObjectMapper();
+								JsonNode AJAX_JSON = AJAX_OBJ_MAPPER.readTree(AJAX);
 
-							//タイムラインの内容
-							List<HashMap> TIMELINE_CONTENTS = new ArrayList<>();
+								//タイムラインの内容
+								List<HashMap> TIMELINE_CONTENTS = new ArrayList<>();
 
-							for(int I = 0; I < 20; I++){
-								if(!AJAX_JSON.get(I).isNull()){
-									JsonNode ROW = AJAX_JSON.get(I);
+								for(int I = 0; I < 20; I++){
+									if(!AJAX_JSON.get(I).isNull()){
+										JsonNode ROW = AJAX_JSON.get(I);
 
-									HashMap<String, Object> TIMELINE_CONTENT = new HashMap<>();
+										HashMap<String, Object> TIMELINE_CONTENT = new HashMap<>();
 
-									//ノートの情報
-									TIMELINE_CONTENT.put("ID", ROW.get("id").textValue());
-									TIMELINE_CONTENT.put("DATE", ROW.get("createdAt").textValue());
-									TIMELINE_CONTENT.put("TEXT", ROW.get("text").textValue());
+										//ノートの情報
+										TIMELINE_CONTENT.put("ID", ROW.get("id").textValue());
+										TIMELINE_CONTENT.put("DATE", ROW.get("createdAt").textValue());
+										TIMELINE_CONTENT.put("TEXT", ROW.get("text").textValue());
 
-									//投稿者の情報
-									HashMap<String, Object> AUTHOR_INFO = new HashMap<>();
-									AUTHOR_INFO.put("ID", ROW.get("user").get("id").textValue());
-									AUTHOR_INFO.put("NAME", ROW.get("user").get("name").textValue());
-									AUTHOR_INFO.put("UID", ROW.get("user").get("username").textValue());
-									AUTHOR_INFO.put("HOST", ROW.get("user").get("host").textValue());
-									AUTHOR_INFO.put("ICON", ROW.get("user").get("avatarUrl").textValue());
-									AUTHOR_INFO.put("BOT", ROW.get("user").get("isBot").asBoolean());
-									AUTHOR_INFO.put("CAT", ROW.get("user").get("isCat").asBoolean());
-									//追加
-									TIMELINE_CONTENT.put("AUTHOR", AUTHOR_INFO);
-
-									if(ROW.get("user").get("instance") != null){
-										//インスタンスの情報
-										HashMap<String, Object> INSTANCE_INFO = new HashMap<>();
-										INSTANCE_INFO.put("NAME", ROW.get("user").get("instance").get("name").textValue());
-										INSTANCE_INFO.put("SOFTWARE_NAME", ROW.get("user").get("instance").get("softwareName").textValue());
-										INSTANCE_INFO.put("SOFTWARE_VERSION", ROW.get("user").get("instance").get("softwareVersion").textValue());
-										INSTANCE_INFO.put("ICON", ROW.get("user").get("instance").get("iconUrl").textValue());
-										INSTANCE_INFO.put("DOMAIN", ROW.get("user").get("host").textValue());
-										INSTANCE_INFO.put("THEME_COLOR", ROW.get("user").get("instance").get("themeColor").textValue());
+										//投稿者の情報
+										HashMap<String, Object> AUTHOR_INFO = new HashMap<>();
+										AUTHOR_INFO.put("ID", ROW.get("user").get("id").textValue());
+										AUTHOR_INFO.put("NAME", ROW.get("user").get("name").textValue());
+										AUTHOR_INFO.put("UID", ROW.get("user").get("username").textValue());
+										AUTHOR_INFO.put("HOST", ROW.get("user").get("host").textValue());
+										AUTHOR_INFO.put("ICON", ROW.get("user").get("avatarUrl").textValue());
+										AUTHOR_INFO.put("BOT", ROW.get("user").get("isBot").asBoolean());
+										AUTHOR_INFO.put("CAT", ROW.get("user").get("isCat").asBoolean());
 										//追加
-										TIMELINE_CONTENT.put("INSTANCE", INSTANCE_INFO);
-									}else {//Nullなので
-										//追加
-										TIMELINE_CONTENT.put("INSTANCE", null);
+										TIMELINE_CONTENT.put("AUTHOR", AUTHOR_INFO);
+
+										if(ROW.get("user").get("instance") != null){
+											//インスタンスの情報
+											HashMap<String, Object> INSTANCE_INFO = new HashMap<>();
+											INSTANCE_INFO.put("NAME", ROW.get("user").get("instance").get("name").textValue());
+											INSTANCE_INFO.put("SOFTWARE_NAME", ROW.get("user").get("instance").get("softwareName").textValue());
+											INSTANCE_INFO.put("SOFTWARE_VERSION", ROW.get("user").get("instance").get("softwareVersion").textValue());
+											INSTANCE_INFO.put("ICON", ROW.get("user").get("instance").get("iconUrl").textValue());
+											INSTANCE_INFO.put("DOMAIN", ROW.get("user").get("host").textValue());
+											INSTANCE_INFO.put("THEME_COLOR", ROW.get("user").get("instance").get("themeColor").textValue());
+											//追加
+											TIMELINE_CONTENT.put("INSTANCE", INSTANCE_INFO);
+										}else {//Nullなので
+											//追加
+											TIMELINE_CONTENT.put("INSTANCE", null);
+										}
+
+										TIMELINE_CONTENTS.add(TIMELINE_CONTENT);
+									} else {
+										break;
 									}
-
-									TIMELINE_CONTENTS.add(TIMELINE_CONTENT);
-								} else {
-									break;
 								}
+
+								//返答の内容
+								HashMap<String, Object> RESULT_BODY = new HashMap();
+								RESULT_BODY.put("STATUS", true);
+								RESULT_BODY.put("TIMELINE", TIMELINE_CONTENTS);
+
+								RESULT = new HashMap();
+								RESULT.put("RESPONSE", new ObjectMapper().writeValueAsString(RESULT_BODY));
+								RESULT.put("STATUS_CODE", 200);
 							}
-
-							//返答の内容
-							HashMap<String, Object> RESULT_BODY = new HashMap();
-							RESULT_BODY.put("STATUS", true);
-							RESULT_BODY.put("TIMELINE", TIMELINE_CONTENTS);
-
-							RESULT = new HashMap();
-							RESULT.put("RESPONSE", new ObjectMapper().writeValueAsString(RESULT_BODY));
-							RESULT.put("STATUS_CODE", 200);
 						} else {//メソッドがGETじゃない
 							RESULT = new HashMap();
 							RESULT.put("RESPONSE", "{\"STATUS\":false}");
