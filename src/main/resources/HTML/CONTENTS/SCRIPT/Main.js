@@ -93,7 +93,7 @@ function ADD_NOTE_ELEMENT(EL, NOTE, AUTHOR, INSTANCE){
 	USER_EL.className = "USER";
 	USER_EL.innerHTML = `
 							<IMG SRC="${AUTHOR.ICON}">
-							<A HREF="/USER/${AUTHOR.UID}@${AUTHOR.DOMAIN}">${AUTHOR.NAME}</A>
+							<A HREF="/USER/${AUTHOR.UID}@${AUTHOR.DOMAIN}" onclick="event.preventDefault();">${AUTHOR.NAME}</A>
 							<SPAN CLASS="INSTANCE" STYLE="background-color: ${INSTANCE.THEME_COLOR}; color: ${INVERSE_COLOR(INSTANCE.THEME_COLOR)};"><IMG SRC="${INSTANCE.ICON}">${INSTANCE.NAME}</SPAN>
 						`;
 	NOTE_EL.appendChild(USER_EL);
