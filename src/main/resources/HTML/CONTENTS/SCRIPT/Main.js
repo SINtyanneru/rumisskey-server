@@ -6,6 +6,17 @@ let MAIN_EL = document.getElementById("MAIN");
 
 let TOKEN = "4LfqJNO9w8x1x6rD";
 
+window.addEventListener("load", async (E)=>{
+	const RESULT = await GET_TIMELINE(CREATE_NOTE_TEXT_EL.value);
+
+	if(RESULT !== false){
+		for (let I = 0; I < RESULT.TIMELINE.length; I++) {
+			const TIMELINE_DATA = RESULT.TIMELINE[I];
+			ADD_NOTE_ELEMENT(MAIN_EL, TIMELINE_DATA.ID, TIMELINE_DATA.TEXT);
+		}
+	}
+});
+
 function OPEN_DIALOG_BG(){
 	if(DIALOG_BG_EL.style.display === "none"){
 		DIALOG_BG_EL.style.display = "block";
