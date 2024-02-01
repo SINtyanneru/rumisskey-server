@@ -133,7 +133,7 @@ public class ROUTER {
 										AUTHOR_INFO.put("NAME", ROW.get("user").get("name").textValue());
 										AUTHOR_INFO.put("UID", ROW.get("user").get("username").textValue());
 										AUTHOR_INFO.put("HOST", ROW.get("user").get("host").textValue());
-										AUTHOR_INFO.put("ICON", ROW.get("user").get("faviconUrl").textValue());
+										AUTHOR_INFO.put("ICON", ROW.get("user").get("avatarUrl").textValue());
 										AUTHOR_INFO.put("BOT", ROW.get("user").get("isBot").asBoolean());
 										AUTHOR_INFO.put("CAT", ROW.get("user").get("isCat").asBoolean());
 										//追加
@@ -145,7 +145,7 @@ public class ROUTER {
 											INSTANCE_INFO.put("NAME", ROW.get("user").get("instance").get("name").textValue());
 											INSTANCE_INFO.put("SOFTWARE_NAME", ROW.get("user").get("instance").get("softwareName").textValue());
 											INSTANCE_INFO.put("SOFTWARE_VERSION", ROW.get("user").get("instance").get("softwareVersion").textValue());
-											INSTANCE_INFO.put("ICON", ROW.get("user").get("instance").get("iconUrl").textValue());
+											INSTANCE_INFO.put("ICON", ROW.get("user").get("instance").get("faviconUrl").textValue());
 											INSTANCE_INFO.put("DOMAIN", ROW.get("user").get("host").textValue());
 											INSTANCE_INFO.put("THEME_COLOR", ROW.get("user").get("instance").get("themeColor").textValue());
 											//追加
